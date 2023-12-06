@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/playlistFragment2">
+    <fragment
+        android:id="@+id/playlistFragment2"
+        android:name="com.example.myapplication.presentation.playlists.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist" >
+        <action
+            android:id="@+id/action_playlistFragment2_to_playListsItemsFragment"
+            app:destination="@id/playListsItemsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playListsItemsFragment"
+        android:name="com.example.myapplication.presentation.playlistsItems.PlayListsItemsFragment"
+        android:label="fragment_play_lists_items"
+        tools:layout="@layout/fragment_play_lists_items" >
+        <action
+            android:id="@+id/action_playListsItemsFragment_to_playVideoFragment"
+            app:destination="@id/playVideoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playVideoFragment"
+        android:name="com.example.myapplication.presentation.playvideo.PlayVideoFragment"
+        android:label="fragment_play_video"
+        tools:layout="@layout/fragment_play_video" />
+</navigation>
