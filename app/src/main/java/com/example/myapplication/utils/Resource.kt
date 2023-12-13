@@ -20,7 +20,7 @@ data class Resource<out T>(
             return Resource(
                 status = Status.LOADING,
                 data = null,
-                message = null,
+                message = "Loading",
                 code = null
             )
         }

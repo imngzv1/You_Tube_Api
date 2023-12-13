@@ -1,5 +1,6 @@
 package com.example.myapplication.domain.repository
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.BuildConfig
@@ -22,6 +23,7 @@ class Repository(private val youTubeApiService: YouTubeApiService) {
         ).enqueue(object : Callback<PlaylistModel> {
             override fun onResponse(call: Call<PlaylistModel>, response: Response<PlaylistModel>) {
                 if (response.isSuccessful) {
+                    resourceData.value = Resource.loading()
                     resourceData.value = Resource.success(response.body())
                 } else {
                     resourceData.value = Resource.error(
@@ -41,5 +43,37 @@ class Repository(private val youTubeApiService: YouTubeApiService) {
             }
         })
         return resourceData
+    }
+
+    fun getVideoOfPlaylists(playlistId:String): LiveData<Resource<PlaylistModel>>  {
+        val resourceDataItems=MutableLiveData<Resource<PlaylistModel>>()
+        youTubeApiService.getPlaylistItem(
+            key = BuildConfig.YOU_TUBE_API_KEY,
+            part = "contentDetails,snippet",
+            playlistId = playlistId,
+            maxResults = 16
+        ).enqueue(object:Callback<PlaylistModel>{
+            override fun onResponse(call: Call<PlaylistModel>, response: Response<PlaylistModel>) {
+                if (response.isSuccessful) {
+                    resourceDataItems.value = Resource.success(response.body())
+                } else {
+                    resourceDataItems.value = Resource.error(
+                        msg = response.message(),
+                        data = null,
+                        code = response.code()
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<PlaylistModel>, t: Throwable) {
+                resourceDataItems.value = Resource.error(
+                    msg = t.message,
+                    data = null,
+                    code = 429
+                )
+            }
+
+        })
+        return resourceDataItems
     }
 }

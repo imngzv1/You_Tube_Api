@@ -17,4 +17,13 @@ interface YouTubeApiService {
         @Query("maxResults")
         maxResult:Int
     ): Call<PlaylistModel>
+
+
+    @GET("playlistItems")
+    fun getPlaylistItem(
+        @Query("key") key: String,
+        @Query("part") part: String,
+        @Query("playlistId") playlistId: String,
+        @Query("maxResults") maxResults: Int = 20
+    ): Call<PlaylistModel>
 }

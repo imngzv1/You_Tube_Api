@@ -1,5 +1,7 @@
 package com.example.myapplication.data.model
 
+import java.io.Serializable
+
 data class PlaylistModel(
     val etag: String,
     val items: List<Item>,
@@ -13,7 +15,7 @@ data class PlaylistModel(
         val id: String,
         val kind: String,
         val snippet: Snippet
-    ) {
+    ):Serializable {
         data class ContentDetails(
             val itemCount: Int
         )
